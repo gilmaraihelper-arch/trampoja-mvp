@@ -19,8 +19,7 @@
   </g>
 
   <!-- Wordmark -->
-  <g transform="translate(320 96)">
+  <g transform="translate(320 106)">
     <text x="0" y="82" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="96" font-weight="900" fill="#FFFFFF" letter-spacing="-1.5">Trampo<tspan fill="url(#g)">Já</tspan></text>
-    <text x="0" y="130" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="24" font-weight="600" fill="#AAB6E6">taxas e turnos em restaurante • Curitiba</text>
   </g>
 </svg>
