@@ -29,6 +29,8 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       # No build step: it's plain static files
       - name: Upload artifact
