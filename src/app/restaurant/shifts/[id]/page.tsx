@@ -15,11 +15,11 @@ import { Button } from '@/components/ui/button'
 import { formatDateTime } from '@/utils/format'
 
 type PageProps = {
-  params: Promise<{ id: string }>
+  params: { id: string }
 }
 
 export default async function RestaurantShiftDetailPage({ params }: PageProps) {
-  const { id } = await params
+  const { id } = params
   const shift = restaurantShifts.find((s) => s.id === id)
   if (!shift) return notFound()
 
