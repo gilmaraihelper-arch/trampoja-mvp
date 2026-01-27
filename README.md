@@ -45,7 +45,12 @@ pnpm dev
 
 Para demo rápida dos fluxos (Freelancer ↔ Restaurante), use a pasta `prototype/`.
 
-Rodar local:
+### GitHub Pages (link público)
+Este repo tem workflow de Pages para publicar `prototype/` automaticamente quando houver push em `main`.
+
+Depois de habilitar **Settings → Pages → Source: GitHub Actions**, o link vai aparecer ali.
+
+### Rodar local
 ```bash
 cd prototype
 npx serve -s . -l 5173
