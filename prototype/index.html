@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0B5FFF" />
+  <title>TrampoJá — Protótipo (MVP)</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">TJ</span>
+        <div class="brandText">
+          <div class="brandName">TrampoJá</div>
+          <div class="brandTag">Protótipo navegável (fake data)</div>
+        </div>
+      </div>
+      <div class="topActions">
+        <button class="chip" id="btnRole" type="button" title="Alternar perfil">Perfil: <span id="roleLabel">Freelancer</span></button>
+        <button class="iconBtn" id="btnInstall" type="button" title="Instalar (PWA)">Instalar</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="sidebar" aria-label="Navegação">
+        <nav class="nav">
+          <div class="navSection">
+            <div class="navTitle">Freelancer</div>
+            <a class="navLink" href="#/f/home" data-route="/f/home">Início</a>
+            <a class="navLink" href="#/f/gigs" data-route="/f/gigs">Vagas (Plantões)</a>
+            <a class="navLink" href="#/f/applications" data-route="/f/applications">Minhas candidaturas</a>
+            <a class="navLink" href="#/f/shifts" data-route="/f/shifts">Meus plantões</a>
+            <a class="navLink" href="#/f/wallet" data-route="/f/wallet">Carteira</a>
+            <a class="navLink" href="#/f/profile" data-route="/f/profile">Perfil</a>
+          </div>
+          <div class="navSection">
+            <div class="navTitle">Restaurante</div>
+            <a class="navLink" href="#/r/home" data-route="/r/home">Painel</a>
+            <a class="navLink" href="#/r/shifts" data-route="/r/shifts">Plantões</a>
+            <a class="navLink" href="#/r/applicants" data-route="/r/applicants">Candidatos</a>
+            <a class="navLink" href="#/r/payments" data-route="/r/payments">Pagamentos</a>
+            <a class="navLink" href="#/r/profile" data-route="/r/profile">Perfil</a>
+          </div>
+          <div class="navSection">
+            <div class="navTitle">Prototype</div>
+            <a class="navLink" href="#/about" data-route="/about">Sobre / Notas</a>
+          </div>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+        <div id="view"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>TrampoJá (MVP) — protótipo PWA • offline básico • sem backend</div>
+      <div class="footerRight">
+        <a href="#/about">Estados & Próximos passos</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

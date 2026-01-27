@@ -41,5 +41,18 @@ cp .env.example .env.local
 pnpm dev
 ```
 
+## Protótipo navegável (sem backend)
+
+Para demo rápida dos fluxos (Freelancer ↔ Restaurante), use a pasta `prototype/`.
+
+Rodar local:
+```bash
+cd prototype
+npx serve -s . -l 5173
+```
+Abra: http://localhost:5173/
+
+> Dica: se o PWA ficar “cacheado”, use o botão **Resetar protótipo** em Freelancer → Perfil.
+
 ## Status
 Em construção.

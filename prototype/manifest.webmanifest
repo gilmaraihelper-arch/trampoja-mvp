@@ -1,0 +1,9 @@
+{
+  "name": "TrampoJá — Protótipo MVP",
+  "short_name": "TrampoJá",
+  "start_url": "./index.html#/f/home",
+  "display": "standalone",
+  "background_color": "#0B1020",
+  "theme_color": "#0B5FFF",
+  "description": "Protótipo navegável (fake data) para fluxos Freelancer e Restaurante."
+}
