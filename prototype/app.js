@@ -194,20 +194,26 @@ function setActiveNav(path){
 }
 
 function setRole(role){
-  state.role = role;
+  // Freelancer-only demo
+  state.role = 'freelancer';
   saveState();
-  $('#roleLabel').textContent = role === 'freelancer' ? 'Freelancer' : 'Restaurante';
-  toast('Perfil alterado', role === 'freelancer' ? 'Você está simulando o app do Freelancer.' : 'Você está simulando o painel do Restaurante.');
 }
+
 
 function currentRoleHome(){
-  return state.role === 'freelancer' ? '/f/home' : '/r/home';
+  return '/f/home';
 }
 
+
 function ensureRoleForPath(path){
-  if(path.startsWith('/f/') && state.role !== 'freelancer') setRole('freelancer');
-  if(path.startsWith('/r/') && state.role !== 'restaurant') setRole('restaurant');
+  if(path.startsWith('/r/')){
+    location.hash = '#/f/home';
+    return;
+  }
+  state.role = 'freelancer';
+  saveState();
 }
+
 
 // --- Derived data
 function getShift(shiftId){
@@ -600,6 +606,7 @@ function viewApplications(){
         el('div',{class:'row', style:'margin-top:10px'},[
           s ? el('button',{class:'btn', onClick:()=>location.hash=`#/f/gig?shiftId=${encodeURIComponent(s.id)}`}, 'Ver plantão') : null,
           (a.status==='applied') ? el('button',{class:'btn danger', onClick:()=>cancelApplication(a.id)}, 'Cancelar') : null,
+          (a.status==='applied' && s) ? el('button',{class:'btn ok', onClick:()=>approveFreelancerForShift(s.id, state.freelancer.id)}, 'Simular aprovação') : null,
           (a.status==='approved') ? el('button',{class:'btn ok', onClick:()=>location.hash='#/f/shifts'}, 'Ir para Meus plantões') : null,
         ])
       ])
@@ -645,6 +652,7 @@ function viewMyShifts(){
           (status==='scheduled') ? el('button',{class:'btn primary', onClick:()=>checkIn(s.id)}, 'Check-in') : null,
           (status==='checked_in') ? el('button',{class:'btn ok', onClick:()=>checkOut(s.id)}, 'Check-out') : null,
           (status==='completed') ? badgeStatus(w?.approvedByRestaurantAt ? 'Validado pelo restaurante' : 'Aguardando validação', w?.approvedByRestaurantAt?'ok':'warn') : null,
+          (status==='completed' && !w?.approvedByRestaurantAt) ? el('button',{class:'btn ok', onClick:()=>validateWorkAndReleasePayment(s.id, state.freelancer.id)}, 'Simular validação & pagamento') : null,
           el('button',{class:'btn', onClick:()=>location.hash=`#/f/gig?shiftId=${encodeURIComponent(s.id)}`}, 'Ver detalhes')
         ]),
         w?.checkInAt ? el('div',{class:'cardMeta', style:'margin-top:8px'}, `Check-in: ${fmtDate(w.checkInAt)}`) : null,
@@ -1061,11 +1069,11 @@ function viewAbout(){
         el('div',{class:'cardTitle'}, 'Como usar (demo rápida)'),
         el('div',{class:'cardMeta', html: `
           <ol>
-            <li>Comece em <b>Restaurante → Candidatos</b> e <b>Aprove</b> a Ana em um plantão.</li>
-            <li>Troque o perfil para <b>Freelancer</b> (botão no topo) e vá em <b>Meus plantões</b>.</li>
-            <li>Faça <b>Check-in</b> → <b>Check-out</b>.</li>
-            <li>Volte ao perfil <b>Restaurante → Pagamentos</b> e clique <b>Validar & pagar</b>.</li>
-            <li>Veja o saldo do freelancer em <b>Freelancer → Carteira</b>.</li>
+            <li>Vá em <b>Freelancer → Plantões</b> e envie uma candidatura.</li>
+            <li>Em <b>Freelancer → Minhas candidaturas</b>, clique <b>Simular aprovação</b>.</li>
+            <li>Vá em <b>Freelancer → Meus plantões</b> e faça <b>Check-in</b> → <b>Check-out</b>.</li>
+            <li>Quando aparecer “Aguardando validação”, clique <b>Simular validação & pagar</b>.</li>
+            <li>Veja o saldo em <b>Freelancer → Carteira</b>.</li>
           </ol>
         `})
       ])
@@ -1153,15 +1161,6 @@ $('#btnInstall').addEventListener('click', async ()=>{
   deferredPrompt = null;
   toast('Instalação', `Resposta: ${choice.outcome}`);
 });
-
-$('#btnRole').addEventListener('click', ()=>{
-  const next = state.role === 'freelancer' ? 'restaurant' : 'freelancer';
-  setRole(next);
-  location.hash = '#' + currentRoleHome();
-});
-
-// init role label
-$('#roleLabel').textContent = state.role === 'freelancer' ? 'Freelancer' : 'Restaurante';
 
 window.addEventListener('hashchange', route);
 window.addEventListener('load', ()=>{
