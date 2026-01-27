@@ -16,7 +16,7 @@ export function AppShell({ children, className }: AppShellProps) {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/brand/trampoja-wordmark-v1.svg"
+              src="/brand/trampoja-wordmark-v1-light.svg"
               alt="TrampoJá"
               width={160}
               height={32}
