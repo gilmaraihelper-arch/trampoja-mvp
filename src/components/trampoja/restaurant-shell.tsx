@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 import { cn } from '@/utils/tailwind'
 import { Button } from '@/components/ui/button'
+import { MobileTabBar } from '@/components/trampoja/mobile-tab-bar'
 
 type RestaurantShellProps = {
   children: React.ReactNode
@@ -25,26 +26,33 @@ export function RestaurantShell({ children, className }: RestaurantShellProps) {
             />
           </Link>
 
-          <nav className="flex items-center gap-1">
-            <Button asChild variant="ghost" className="hidden sm:inline-flex">
+          <nav className="hidden items-center gap-1 md:flex">
+            <Button asChild variant="ghost">
               <Link href="/gigs">Freelancer</Link>
             </Button>
-            <Button asChild variant="ghost">
+            <Button asChild variant="secondary">
               <Link href="/restaurant">Restaurante</Link>
             </Button>
           </nav>
         </div>
       </header>
 
-      <main className={cn('mx-auto w-full max-w-6xl px-4 py-10', className)}>
+      <main
+        className={cn(
+          'mx-auto w-full max-w-6xl px-4 py-6 pb-28 md:py-10 md:pb-10',
+          className,
+        )}
+      >
         {children}
       </main>
 
-      <footer className="border-t py-10">
+      <footer className="hidden border-t py-10 md:block">
         <div className="text-muted-foreground mx-auto max-w-6xl px-4 text-sm">
           TrampoJá • MVP (Restaurante) — Curitiba
         </div>
       </footer>
+
+      <MobileTabBar />
     </div>
   )
 }

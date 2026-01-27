@@ -13,9 +13,9 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'TrampoJá — MVP (Freelancer)',
-  description:
-    'TrampoJá: turnos avulsos para restaurantes. MVP focado no app do freelancer.',
+  title: 'TrampoJá — MVP',
+  description: 'TrampoJá: turnos avulsos para restaurantes. MVP.',
+  manifest: '/manifest.webmanifest',
 }
 
 const geistSans = Geist({
@@ -30,7 +30,7 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${geistSans.className} antialiased`}>
         <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
         <ThemeProvider

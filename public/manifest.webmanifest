@@ -1,0 +1,18 @@
+{
+  "name": "TrampoJá",
+  "short_name": "TrampoJá",
+  "description": "TrampoJá: turnos avulsos para restaurantes. MVP.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "/brand/trampoja-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
