@@ -1,54 +1,77 @@
-import { EnvVarWarning } from '@/components/env-var-warning'
-import { AuthButton } from '@/components/auth-button'
-import { Hero } from '@/components/hero'
-import { ThemeSwitcher } from '@/components/theme-switcher'
-import { ConnectSupabaseSteps } from '@/components/tutorial/connect-supabase-steps'
-import { SignUpUserSteps } from '@/components/tutorial/sign-up-user-steps'
-import { hasEnvVars } from '@/utils/env'
 import Link from 'next/link'
-import { Suspense } from 'react'
 
-export default function Home() {
+import { AppShell } from '@/components/trampoja/app-shell'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center">
-      <div className="flex w-full flex-1 flex-col items-center gap-20">
-        <nav className="border-b-foreground/10 flex h-16 w-full justify-center border-b">
-          <div className="flex w-full max-w-5xl items-center justify-between p-3 px-5 text-sm">
-            <div className="flex items-center gap-5 font-semibold">
-              <Link href={'/'}>Next.js Supabase Starter</Link>
-            </div>
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
+    <AppShell>
+      <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+        <div>
+          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+            Plantões avulsos. Rápido. Sem enrolação.
+          </h1>
+          <p className="text-muted-foreground mt-4 max-w-xl text-base">
+            O TrampoJá conecta freelancers a restaurantes para turnos avulsos.
+            Começando por Curitiba. Este é o bloco 1 do MVP (Freelancer): Home,
+            feed e candidatura.
+          </p>
+
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="/gigs">Ver vagas</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/gigs">Como funciona</Link>
+            </Button>
           </div>
-        </nav>
-        <div className="flex max-w-5xl flex-1 flex-col gap-20 p-5">
-          <Hero />
-          <main className="flex flex-1 flex-col gap-6 px-4">
-            <h2 className="mb-4 text-xl font-medium">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
+
+          <div className="text-muted-foreground mt-6 text-sm">
+            Pagamento fora do app no MVP (Pix/dinheiro). Supabase entra no
+            próximo bloco.
+          </div>
         </div>
 
-        <footer className="mx-auto flex w-full items-center justify-center gap-8 border-t py-16 text-center text-xs">
-          <p>
-            Powered by{' '}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
+        <Card className="bg-card">
+          <CardHeader>
+            <CardTitle className="text-base">
+              MVP Freelancer — Escopo (agora)
+            </CardTitle>
+            <CardDescription>
+              Entrega com calma, bem feita, com visual premium.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            <div className="flex items-center justify-between">
+              <span>1) Tema (Tailwind + shadcn)</span>
+              <span className="text-muted-foreground">em andamento</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>2) Home</span>
+              <span className="text-muted-foreground">preview</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>3) Feed de vagas</span>
+              <span className="text-muted-foreground">preview</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>4) Detalhe + Candidatar</span>
+              <span className="text-muted-foreground">preview</span>
+            </div>
+            <div className="text-muted-foreground pt-2 text-xs">
+              Próximo: login + candidaturas persistidas no Supabase (quando você
+              criar o projeto).
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    </main>
+    </AppShell>
   )
 }
