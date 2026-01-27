@@ -1,15 +1,15 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { cn } from '@/utils/tailwind'
 import { Button } from '@/components/ui/button'
 
-type AppShellProps = {
+type RestaurantShellProps = {
   children: React.ReactNode
   className?: string
 }
 
-export function AppShell({ children, className }: AppShellProps) {
+export function RestaurantShell({ children, className }: RestaurantShellProps) {
   return (
     <div className="bg-background text-foreground min-h-dvh">
       <header className="supports-[backdrop-filter]:bg-background/70 bg-background/85 sticky top-0 z-50 border-b backdrop-blur">
@@ -27,12 +27,9 @@ export function AppShell({ children, className }: AppShellProps) {
 
           <nav className="flex items-center gap-1">
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
-              <Link href="/">Home</Link>
+              <Link href="/gigs">Freelancer</Link>
             </Button>
             <Button asChild variant="ghost">
-              <Link href="/gigs">Vagas</Link>
-            </Button>
-            <Button asChild variant="ghost" className="hidden sm:inline-flex">
               <Link href="/restaurant">Restaurante</Link>
             </Button>
           </nav>
@@ -45,7 +42,7 @@ export function AppShell({ children, className }: AppShellProps) {
 
       <footer className="border-t py-10">
         <div className="text-muted-foreground mx-auto max-w-6xl px-4 text-sm">
-          TrampoJá • MVP (Freelancer) — Curitiba
+          TrampoJá • MVP (Restaurante) — Curitiba
         </div>
       </footer>
     </div>
