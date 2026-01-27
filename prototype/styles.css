@@ -39,14 +39,11 @@ a{color:inherit}
   backdrop-filter: blur(12px);
 }
 .brand{display:flex; gap:12px; align-items:center}
-.logo{
-  width:40px;height:40px; display:grid; place-items:center;
-  border-radius:12px;
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
-  font-weight:800;
-  box-shadow: var(--shadow);
+.wordmark{
+  height:32px;
+  width:auto;
+  display:block;
 }
-.brandName{font-weight:800; letter-spacing:.2px}
 .brandTag{font-size:12px;color:var(--muted)}
 .topActions{display:flex; gap:10px; align-items:center}
 
