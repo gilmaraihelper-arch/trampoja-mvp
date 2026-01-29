@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState, useTransition } from 'react'
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -36,6 +36,9 @@ export function InviteFavoritesPanel({
   const [favorites, setFavorites] = useState<FavoriteRow[]>([])
   const [selected, setSelected] = useState<Record<string, boolean>>({})
   const [result, setResult] = useState<string>('')
+  const [activeInvites, setActiveInvites] = useState<
+    Record<string, { expiresAt: string }>
+  >({})
 
   const freelancersById = useMemo(() => {
     const m = new Map<string, Freelancer>()
@@ -43,19 +46,49 @@ export function InviteFavoritesPanel({
     return m
   }, [freelancers])
 
+  const refreshFavorites = useCallback(async () => {
+    const res = await fetch(
+      `/api/restaurant/favorites/list?restaurantId=${encodeURIComponent(restaurantId)}`
+    )
+    const data = (await res.json()) as { favorites: FavoriteRow[] }
+    setFavorites(data.favorites || [])
+  }, [restaurantId])
+
+  const refreshInvites = useCallback(async () => {
+    const res = await fetch(
+      `/api/restaurant/invites/list?restaurantId=${encodeURIComponent(restaurantId)}&shiftId=${encodeURIComponent(shiftId)}`
+    )
+    const data = (await res.json()) as {
+      invites: Array<{ freelancerId: string; expiresAt: string; status: string }>
+    }
+
+    const now = Date.now()
+    const active: Record<string, { expiresAt: string }> = {}
+    for (const inv of data.invites || []) {
+      if (inv.status !== 'sent') continue
+      const exp = Date.parse(inv.expiresAt)
+      if (!Number.isFinite(exp)) continue
+      if (exp > now) active[inv.freelancerId] = { expiresAt: inv.expiresAt }
+    }
+    setActiveInvites(active)
+  }, [restaurantId, shiftId])
+
   useEffect(() => {
     let cancelled = false
     ;(async () => {
-      const res = await fetch(
-        `/api/restaurant/favorites/list?restaurantId=${encodeURIComponent(restaurantId)}`
-      )
-      const data = (await res.json()) as { favorites: FavoriteRow[] }
-      if (!cancelled) setFavorites(data.favorites || [])
+      await Promise.all([refreshFavorites(), refreshInvites()])
+      if (cancelled) return
     })()
+
+    const t = setInterval(() => {
+      refreshInvites().catch(() => null)
+    }, 30_000)
+
     return () => {
       cancelled = true
+      clearInterval(t)
     }
-  }, [restaurantId])
+  }, [refreshFavorites, refreshInvites])
 
   const favoriteIds = useMemo(
     () => favorites.map((f) => f.freelancerId),
@@ -63,14 +96,26 @@ export function InviteFavoritesPanel({
   )
 
   const selectedIds = useMemo(
-    () => favoriteIds.filter((id) => selected[id]),
-    [favoriteIds, selected]
+    () => favoriteIds.filter((id) => selected[id] && !activeInvites[id]),
+    [favoriteIds, selected, activeInvites]
   )
+
+  const [nowMs, setNowMs] = useState(() => Date.now())
+
+  useEffect(() => {
+    const t = setInterval(() => setNowMs(Date.now()), 30_000)
+    return () => clearInterval(t)
+  }, [])
+
+  function minutesToExpire(expiresAtIso: string) {
+    const ms = Date.parse(expiresAtIso) - nowMs
+    return Math.max(0, Math.ceil(ms / 60000))
+  }
 
   function toggleAll(on: boolean) {
     const next: Record<string, boolean> = {}
     favoriteIds.forEach((id) => {
-      next[id] = on
+      next[id] = on && !activeInvites[id]
     })
     setSelected(next)
   }
@@ -78,6 +123,7 @@ export function InviteFavoritesPanel({
   async function sendInvites() {
     startTransition(async () => {
       setResult('')
+
       const res = await fetch('/api/restaurant/invites/bulk', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,6 +144,9 @@ export function InviteFavoritesPanel({
         skipped: number
         expiresAt: string
       }
+
+      await refreshInvites()
+      setSelected({})
 
       setResult(
         `Convites: ${data.created} enviados · ${data.skipped} já convidados. Expira em 60 min.`
@@ -137,6 +186,9 @@ export function InviteFavoritesPanel({
             <div className="space-y-2">
               {favoriteIds.map((fid) => {
                 const f = freelancersById.get(fid)
+                const active = activeInvites[fid]
+                const minutes = active ? minutesToExpire(active.expiresAt) : null
+
                 return (
                   <label
                     key={fid}
@@ -151,10 +203,16 @@ export function InviteFavoritesPanel({
                           ⭐ {(f.rating / 10).toFixed(1)} • Confiabilidade {f.reliability}%
                         </span>
                       ) : null}
+                      {active ? (
+                        <span className="text-muted-foreground mt-1 block text-xs">
+                          Já convidado • expira em {minutes} min
+                        </span>
+                      ) : null}
                     </span>
 
                     <Checkbox
                       checked={!!selected[fid]}
+                      disabled={pending || !!active}
                       onCheckedChange={(v) =>
                         setSelected((s) => ({ ...s, [fid]: !!v }))
                       }
@@ -172,6 +230,10 @@ export function InviteFavoritesPanel({
             >
               Enviar convites ({selectedIds.length})
             </Button>
+
+            <div className="text-muted-foreground text-xs">
+              Convites expiram automaticamente em 60 minutos.
+            </div>
 
             {result ? (
               <div className="text-muted-foreground text-sm">{result}</div>
