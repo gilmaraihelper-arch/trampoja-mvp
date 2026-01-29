@@ -13,6 +13,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { FavoriteInviteActions } from '@/components/trampoja/favorite-invite-actions'
+import { InviteFavoritesPanel } from '@/components/trampoja/invite-favorites-panel'
 import { formatDateTime } from '@/utils/format'
 
 type PageProps = {
@@ -26,6 +27,12 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
   if (!shift) return notFound()
 
   const applicants = applicantsByShift[id] ?? []
+  const freelancers = applicants.map((a) => ({
+    id: a.id,
+    name: a.name,
+    rating: Math.round(a.rating * 10),
+    reliability: a.reliability,
+  }))
 
   return (
     <RestaurantShell>
@@ -100,24 +107,32 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Resumo</CardTitle>
-            <CardDescription>Status e vagas</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <div className="flex items-center justify-between">
-              <span>Status</span>
-              <Badge variant="secondary">{shift.status}</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Vagas</span>
-              <span className="font-medium">
-                {shift.filled}/{shift.headcount}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Resumo</CardTitle>
+              <CardDescription>Status e vagas</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm">
+              <div className="flex items-center justify-between">
+                <span>Status</span>
+                <Badge variant="secondary">{shift.status}</Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Vagas</span>
+                <span className="font-medium">
+                  {shift.filled}/{shift.headcount}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <InviteFavoritesPanel
+            restaurantId="rest_1001"
+            shiftId={id}
+            freelancers={freelancers}
+          />
+        </div>
       </div>
     </RestaurantShell>
   )
