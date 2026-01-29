@@ -20,24 +20,36 @@ export default function RestaurantHomePage() {
   return (
     <RestaurantShell>
       <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Restaurante — {restaurant.name}
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Painel do MVP para publicar plantões, avaliar candidatos e validar
-            pagamentos.
-          </p>
+        <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-orange-50 via-background to-emerald-50/60 px-6 py-8 md:px-10">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.05]"
+            style={{
+              backgroundImage:
+                'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+              backgroundSize: '72px 72px',
+            }}
+          />
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg">
-              <Link href="/restaurant/shifts">Plantões</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link href="/restaurant/shifts/new">Criar plantão</Link>
-            </Button>
+          <div className="relative">
+            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Restaurante — {restaurant.name}
+            </h1>
+            <p className="text-muted-foreground mt-2 max-w-2xl">
+              Painel do MVP para publicar plantões, avaliar candidatos e validar
+              pagamentos.
+            </p>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="px-7">
+                <Link href="/restaurant/shifts">Plantões</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="px-7">
+                <Link href="/restaurant/shifts/new">Criar plantão</Link>
+              </Button>
+            </div>
           </div>
-        </div>
+        </section>
 
         <Card>
           <CardHeader>

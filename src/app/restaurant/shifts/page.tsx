@@ -23,17 +23,31 @@ function statusLabel(status: string) {
 export default function RestaurantShiftsPage() {
   return (
     <RestaurantShell>
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Plantões</h1>
-          <p className="text-muted-foreground mt-2">
-            Lista e status dos plantões publicados.
-          </p>
+      <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-orange-50 via-background to-emerald-50/60 px-6 py-8 md:px-10">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+            backgroundSize: '72px 72px',
+          }}
+        />
+
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Plantões
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              Lista e status dos plantões publicados.
+            </p>
+          </div>
+          <Button asChild size="lg" className="px-7">
+            <Link href="/restaurant/shifts/new">Criar plantão</Link>
+          </Button>
         </div>
-        <Button asChild>
-          <Link href="/restaurant/shifts/new">Criar plantão</Link>
-        </Button>
-      </div>
+      </section>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         {restaurantShifts.map((s) => (
@@ -42,7 +56,7 @@ export default function RestaurantShiftsPage() {
             href={`/restaurant/shifts/${s.id}`}
             className="group"
           >
-            <Card className="transition-shadow group-hover:shadow-md">
+            <Card className="transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
               <CardHeader>
                 <div className="flex items-start justify-between gap-4">
                   <div>

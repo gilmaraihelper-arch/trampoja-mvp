@@ -40,14 +40,27 @@ export default async function GigDetailPage({ params }: PageProps) {
           </Button>
         </div>
 
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">{gig.title}</h1>
-          <p className="text-muted-foreground mt-2">
-            {gig.restaurantName} •{' '}
-            {gig.neighborhood ? `${gig.neighborhood} • ` : ''}
-            {gig.city}
-          </p>
-        </div>
+        <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-orange-50 via-background to-emerald-50/60 px-6 py-8 md:px-10">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.05]"
+            style={{
+              backgroundImage:
+                'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+              backgroundSize: '72px 72px',
+            }}
+          />
+          <div className="relative">
+            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              {gig.title}
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              {gig.restaurantName} •{' '}
+              {gig.neighborhood ? `${gig.neighborhood} • ` : ''}
+              {gig.city}
+            </p>
+          </div>
+        </section>
 
         <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
           <Card>
