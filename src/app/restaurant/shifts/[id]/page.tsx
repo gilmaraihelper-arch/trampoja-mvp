@@ -16,11 +16,12 @@ import { FavoriteInviteActions } from '@/components/trampoja/favorite-invite-act
 import { formatDateTime } from '@/utils/format'
 
 type PageProps = {
-  params: { id: string }
+  params: Promise<{ id: string }> | { id: string }
 }
 
 export default async function RestaurantShiftDetailPage({ params }: PageProps) {
-  const { id } = params
+  const resolved = await Promise.resolve(params)
+  const { id } = resolved
   const shift = restaurantShifts.find((s) => s.id === id)
   if (!shift) return notFound()
 
