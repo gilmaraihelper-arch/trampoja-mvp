@@ -84,9 +84,15 @@ export function InviteFavoritesPanel({
       refreshInvites().catch(() => null)
     }, 30_000)
 
+    const onFav = () => {
+      refreshFavorites().catch(() => null)
+    }
+    window.addEventListener('trampoja:favorites-updated', onFav)
+
     return () => {
       cancelled = true
       clearInterval(t)
+      window.removeEventListener('trampoja:favorites-updated', onFav)
     }
   }, [refreshFavorites, refreshInvites])
 

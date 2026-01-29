@@ -89,7 +89,10 @@ export function FavoriteInviteActions({
         body: JSON.stringify({ restaurantId, freelancerId }),
       })
 
-      if (res.ok) setFavDone(true)
+      if (res.ok) {
+        setFavDone(true)
+        window.dispatchEvent(new Event('trampoja:favorites-updated'))
+      }
     })
   }
 
@@ -111,13 +114,14 @@ export function FavoriteInviteActions({
         expiresAt?: string
       }
 
-      if (data.alreadyInvited) {
+      if (data.expiresAt) {
+        // If the API returns expiresAt, it is an active invite → show the same UI as "already invited"
+        setExpiresAt(data.expiresAt)
         setInvStatus('alreadyInvited')
-        if (data.expiresAt) setExpiresAt(data.expiresAt)
-      } else {
-        setInvStatus('sent')
-        if (data.expiresAt) setExpiresAt(data.expiresAt)
+        return
       }
+
+      setInvStatus(data.alreadyInvited ? 'alreadyInvited' : 'sent')
     })
   }
 
