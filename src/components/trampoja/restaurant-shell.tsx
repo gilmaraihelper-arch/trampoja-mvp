@@ -19,17 +19,14 @@ export function RestaurantShell({ children, className }: RestaurantShellProps) {
             <Image
               src="/brand/trampoja-wordmark-v1-light.svg"
               alt="TrampoJá"
-              width={160}
+              width={180}
               height={32}
               priority
-              className="h-7 w-auto"
+              className="h-8 w-auto"
             />
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">
-            <Button asChild variant="ghost">
-              <Link href="/gigs">Freelancer</Link>
-            </Button>
             <Button asChild variant="secondary">
               <Link href="/restaurant">Restaurante</Link>
             </Button>

@@ -19,10 +19,10 @@ export function AppShell({ children, className }: AppShellProps) {
             <Image
               src="/brand/trampoja-wordmark-v1-light.svg"
               alt="TrampoJá"
-              width={160}
+              width={180}
               height={32}
               priority
-              className="h-7 w-auto"
+              className="h-8 w-auto"
             />
           </Link>
 
@@ -32,9 +32,6 @@ export function AppShell({ children, className }: AppShellProps) {
             </Button>
             <Button asChild variant="secondary">
               <Link href="/gigs">Vagas</Link>
-            </Button>
-            <Button asChild variant="ghost">
-              <Link href="/restaurant">Restaurante</Link>
             </Button>
           </nav>
         </div>
