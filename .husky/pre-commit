@@ -1,1 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Ensure pnpm is available when git is launched without your full shell PATH.
+export PATH="$HOME/.npm-global/bin:$PATH"
+
 pnpm lint-staged && pnpm type-check

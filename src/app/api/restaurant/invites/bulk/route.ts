@@ -34,28 +34,45 @@ export async function POST(req: Request) {
       and(
         eq(invites.shiftId, body.shiftId),
         inArray(invites.freelancerId, body.freelancerIds),
-        gt(invites.expiresAt, now)
-      )
+        gt(invites.expiresAt, now),
+      ),
     )
 
   const already = new Set(existing.map((e) => e.freelancerId))
   const toCreate = body.freelancerIds.filter((id) => !already.has(id))
 
   if (!toCreate.length) {
-    return NextResponse.json({ ok: true, created: 0, skipped: body.freelancerIds.length, expiresAt })
+    return NextResponse.json({
+      ok: true,
+      created: 0,
+      skipped: body.freelancerIds.length,
+      expiresAt,
+    })
   }
 
-  await db.insert(invites).values(
-    toCreate.map((freelancerId) => ({
-      id: makeId('inv'),
-      restaurantId: body.restaurantId,
-      shiftId: body.shiftId,
-      freelancerId,
-      status: 'sent',
-      expiresAt,
-      createdAt: now,
-    }))
-  )
+  await db
+    .insert(invites)
+    .values(
+      toCreate.map((freelancerId) => ({
+        id: makeId('inv'),
+        restaurantId: body.restaurantId,
+        shiftId: body.shiftId,
+        freelancerId,
+        status: 'sent',
+        expiresAt,
+        createdAt: now,
+      })),
+    )
+    // If there is already a row (expired/canceled/declined), reuse it.
+    .onConflictDoUpdate({
+      target: [invites.shiftId, invites.freelancerId],
+      set: {
+        restaurantId: body.restaurantId,
+        status: 'sent',
+        expiresAt,
+        createdAt: now,
+      },
+    })
 
   return NextResponse.json({
     ok: true,

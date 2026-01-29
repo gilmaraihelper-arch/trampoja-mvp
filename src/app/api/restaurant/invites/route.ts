@@ -24,38 +24,73 @@ export async function POST(req: Request) {
 
   const now = new Date()
 
-  // Avoid duplicates: if there is already an active invite, do nothing
-  const existing = await db
-    .select()
+  // If there is already an active invite, do nothing.
+  const activeExisting = await db
+    .select({ id: invites.id })
     .from(invites)
     .where(
       and(
         eq(invites.shiftId, body.shiftId),
         eq(invites.freelancerId, body.freelancerId),
-        gt(invites.expiresAt, now)
-      )
+        eq(invites.status, 'sent'),
+        gt(invites.expiresAt, now),
+      ),
     )
     .limit(1)
 
-  if (existing.length) {
+  if (activeExisting.length) {
     return NextResponse.json({ ok: true, alreadyInvited: true })
   }
 
-  const id = makeId('inv')
+  // Reuse the same row when possible (unique per shift+freelancer).
+  const existingAny = await db
+    .select({ id: invites.id, status: invites.status })
+    .from(invites)
+    .where(
+      and(
+        eq(invites.shiftId, body.shiftId),
+        eq(invites.freelancerId, body.freelancerId),
+      ),
+    )
+    .limit(1)
+
   const expiresAt = new Date(now.getTime() + 60 * 60 * 1000)
 
-  await db
-    .insert(invites)
-    .values({
-      id,
-      restaurantId: body.restaurantId,
-      shiftId: body.shiftId,
-      freelancerId: body.freelancerId,
-      status: 'sent',
-      expiresAt,
-      createdAt: now,
-    })
-    .onConflictDoNothing()
+  if (existingAny.length) {
+    const row = existingAny[0]
+
+    // If already accepted, do not allow re-inviting (for now).
+    if (row.status === 'accepted') {
+      return NextResponse.json(
+        { ok: false, error: 'already accepted' },
+        { status: 409 },
+      )
+    }
+
+    await db
+      .update(invites)
+      .set({
+        restaurantId: body.restaurantId,
+        status: 'sent',
+        expiresAt,
+        createdAt: now,
+      })
+      .where(eq(invites.id, row.id))
+
+    return NextResponse.json({ ok: true, expiresAt })
+  }
+
+  const id = makeId('inv')
+
+  await db.insert(invites).values({
+    id,
+    restaurantId: body.restaurantId,
+    shiftId: body.shiftId,
+    freelancerId: body.freelancerId,
+    status: 'sent',
+    expiresAt,
+    createdAt: now,
+  })
 
   return NextResponse.json({ ok: true, expiresAt })
 }
