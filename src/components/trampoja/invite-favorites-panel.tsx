@@ -235,7 +235,7 @@ export function InviteFavoritesPanel({
               })}
             </div>
 
-            <div className="sticky bottom-0 -mx-6 mt-2 border-t bg-background px-6 py-3">
+            <div className="sticky bottom-24 md:bottom-0 -mx-6 mt-2 border-t bg-background px-6 py-3">
               <Button
                 type="button"
                 className="w-full"
