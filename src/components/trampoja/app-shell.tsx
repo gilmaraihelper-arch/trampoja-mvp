@@ -1,9 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { cn } from '@/utils/tailwind'
 import { Button } from '@/components/ui/button'
 import { MobileTabBar } from '@/components/trampoja/mobile-tab-bar'
+import { BrandMark } from '@/components/trampoja/brand-mark'
 
 type AppShellProps = {
   children: React.ReactNode
@@ -15,16 +15,7 @@ export function AppShell({ children, className }: AppShellProps) {
     <div className="bg-background text-foreground min-h-dvh">
       <header className="supports-[backdrop-filter]:bg-background/70 bg-background/85 sticky top-0 z-50 border-b backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/brand/trampoja-wordmark-v1-light.svg"
-              alt="TrampoJá"
-              width={180}
-              height={32}
-              priority
-              className="h-8 w-auto"
-            />
-          </Link>
+          <BrandMark />
 
           <nav className="hidden items-center gap-1 md:flex">
             <Button asChild variant="ghost">
