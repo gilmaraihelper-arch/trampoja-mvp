@@ -17,42 +17,66 @@ export function FavoriteInviteActions({
 }: Props) {
   const [pending, startTransition] = useTransition()
   const [favDone, setFavDone] = useState(false)
-  const [invDone, setInvDone] = useState(false)
+  const [invStatus, setInvStatus] = useState<
+    'idle' | 'sent' | 'alreadyInvited' | 'error'
+  >('idle')
 
   const disabled = useMemo(
-    () => pending || (favDone && invDone),
-    [pending, favDone, invDone]
+    () => pending || (favDone && invStatus !== 'idle'),
+    [pending, favDone, invStatus]
   )
 
   async function favorite() {
     startTransition(async () => {
-      await fetch('/api/restaurant/favorites', {
+      const res = await fetch('/api/restaurant/favorites', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ restaurantId, freelancerId }),
       })
-      setFavDone(true)
+
+      if (res.ok) setFavDone(true)
     })
   }
 
   async function invite() {
     startTransition(async () => {
-      await fetch('/api/restaurant/invites', {
+      const res = await fetch('/api/restaurant/invites', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ restaurantId, shiftId, freelancerId }),
       })
-      setInvDone(true)
+
+      if (!res.ok) {
+        setInvStatus('error')
+        return
+      }
+
+      const data = (await res.json()) as { alreadyInvited?: boolean }
+      setInvStatus(data.alreadyInvited ? 'alreadyInvited' : 'sent')
     })
   }
 
   return (
     <div className="flex flex-col gap-2">
-      <Button size="sm" variant={favDone ? 'secondary' : 'outline'} disabled={disabled || favDone} onClick={favorite}>
+      <Button
+        size="sm"
+        variant={favDone ? 'secondary' : 'outline'}
+        disabled={disabled || favDone}
+        onClick={favorite}
+      >
         {favDone ? 'Favoritado' : 'Favoritar'}
       </Button>
-      <Button size="sm" disabled={disabled || invDone} onClick={invite}>
-        {invDone ? 'Convidado' : 'Convidar'}
+
+      <Button
+        size="sm"
+        disabled={disabled || invStatus === 'sent' || invStatus === 'alreadyInvited'}
+        onClick={invite}
+      >
+        {invStatus === 'alreadyInvited'
+          ? 'Já convidado'
+          : invStatus === 'sent'
+            ? 'Convidado'
+            : 'Convidar'}
       </Button>
     </div>
   )

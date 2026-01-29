@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 export const restaurants = sqliteTable('restaurants', {
   id: text('id').primaryKey(),
@@ -28,18 +28,34 @@ export const shifts = sqliteTable('shifts', {
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 })
 
-export const favorites = sqliteTable('favorites', {
-  id: text('id').primaryKey(),
-  restaurantId: text('restaurant_id').notNull(),
-  freelancerId: text('freelancer_id').notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
-})
+export const favorites = sqliteTable(
+  'favorites',
+  {
+    id: text('id').primaryKey(),
+    restaurantId: text('restaurant_id').notNull(),
+    freelancerId: text('freelancer_id').notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
+  },
+  (t) => ({
+    uniq: uniqueIndex('favorites_restaurant_freelancer_uniq').on(
+      t.restaurantId,
+      t.freelancerId
+    ),
+  })
+)
 
-export const invites = sqliteTable('invites', {
-  id: text('id').primaryKey(),
-  shiftId: text('shift_id').notNull(),
-  restaurantId: text('restaurant_id').notNull(),
-  freelancerId: text('freelancer_id').notNull(),
-  status: text('status').notNull().default('sent'), // sent|accepted|declined|expired
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
-})
+export const invites = sqliteTable(
+  'invites',
+  {
+    id: text('id').primaryKey(),
+    shiftId: text('shift_id').notNull(),
+    restaurantId: text('restaurant_id').notNull(),
+    freelancerId: text('freelancer_id').notNull(),
+    status: text('status').notNull().default('sent'), // sent|accepted|declined|expired
+    expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
+  },
+  (t) => ({
+    uniq: uniqueIndex('invites_shift_freelancer_uniq').on(t.shiftId, t.freelancerId),
+  })
+)

@@ -13,6 +13,9 @@
 /.next/
 /out/
 
+# local db
+/.data/
+
 # production
 /build
 

@@ -20,12 +20,15 @@ export async function POST(req: Request) {
   }
 
   const id = makeId('fav')
-  await db.insert(favorites).values({
-    id,
-    restaurantId: body.restaurantId,
-    freelancerId: body.freelancerId,
-    createdAt: new Date(),
-  })
+  await db
+    .insert(favorites)
+    .values({
+      id,
+      restaurantId: body.restaurantId,
+      freelancerId: body.freelancerId,
+      createdAt: new Date(),
+    })
+    .onConflictDoNothing()
 
-  return NextResponse.json({ ok: true, id })
+  return NextResponse.json({ ok: true })
 }
