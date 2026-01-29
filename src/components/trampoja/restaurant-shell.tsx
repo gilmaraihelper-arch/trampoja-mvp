@@ -33,6 +33,9 @@ export function RestaurantShell({ children, className }: RestaurantShellProps) {
             <Button asChild variant="secondary">
               <Link href="/restaurant">Restaurante</Link>
             </Button>
+            <Button asChild variant="ghost">
+              <Link href="/restaurant/favorites">Favoritos</Link>
+            </Button>
           </nav>
         </div>
       </header>

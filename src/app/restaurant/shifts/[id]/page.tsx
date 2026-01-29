@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { FavoriteInviteActions } from '@/components/trampoja/favorite-invite-actions'
 import { formatDateTime } from '@/utils/format'
 
 type PageProps = {
@@ -76,6 +77,11 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
                   </div>
                   <div className="flex flex-col gap-2">
                     <Badge variant="outline">{a.status}</Badge>
+                    <FavoriteInviteActions
+                      restaurantId="rest_1001"
+                      shiftId={id}
+                      freelancerId={a.id}
+                    />
                     <Button size="sm" disabled>
                       Aprovar
                     </Button>
