@@ -47,7 +47,7 @@ function Navigation() {
 
   return (
     <nav
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
         isScrolled ? 'glass-effect py-3 shadow-lg' : 'bg-transparent py-5'
       }`}
     >
@@ -73,7 +73,7 @@ function Navigation() {
               <button
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
-                className="link-underline text-sm font-medium text-gray-700 transition-colors duration-200 hover:text-primary"
+                className="link-underline hover:text-primary text-sm font-medium text-gray-700 transition-colors duration-200"
               >
                 {link.label}
               </button>
@@ -93,7 +93,7 @@ function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="p-2 text-gray-700 transition-colors hover:text-primary lg:hidden"
+            className="hover:text-primary p-2 text-gray-700 transition-colors lg:hidden"
             onClick={() => setIsMobileMenuOpen((v) => !v)}
             aria-label="Abrir menu"
           >
@@ -104,10 +104,10 @@ function Navigation() {
 
       {/* Mobile Menu */}
       <div
-        className={`glass-effect absolute left-0 right-0 top-full border-t border-gray-100 transition-all duration-300 lg:hidden ${
+        className={`glass-effect absolute top-full right-0 left-0 border-t border-gray-100 transition-all duration-300 lg:hidden ${
           isMobileMenuOpen
             ? 'translate-y-0 opacity-100'
-            : '-translate-y-4 opacity-0 pointer-events-none'
+            : 'pointer-events-none -translate-y-4 opacity-0'
         }`}
       >
         <div className="section-container py-6">
@@ -119,7 +119,7 @@ function Navigation() {
                   scrollToSection(link.href)
                   setIsMobileMenuOpen(false)
                 }}
-                className="py-2 text-left text-base font-medium text-gray-700 transition-colors hover:text-primary"
+                className="hover:text-primary py-2 text-left text-base font-medium text-gray-700 transition-colors"
               >
                 {link.label}
               </button>
@@ -161,11 +161,11 @@ function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-orange-50 via-white to-green-50 pb-16 pt-24">
+    <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-orange-50 via-white to-green-50 pt-24 pb-16">
       {/* Decorative Elements */}
-      <div className="absolute left-10 top-20 h-20 w-20 animate-float rounded-full bg-primary/10" />
-      <div className="animation-delay-200 absolute bottom-40 left-1/4 h-12 w-12 animate-float rounded-full bg-secondary/10" />
-      <div className="animation-delay-400 absolute right-1/4 top-1/3 h-16 w-16 animate-float rounded-full bg-primary/5" />
+      <div className="animate-float bg-primary/10 absolute top-20 left-10 h-20 w-20 rounded-full" />
+      <div className="animation-delay-200 animate-float bg-secondary/10 absolute bottom-40 left-1/4 h-12 w-12 rounded-full" />
+      <div className="animation-delay-400 animate-float bg-primary/5 absolute top-1/3 right-1/4 h-16 w-16 rounded-full" />
 
       {/* Grid Pattern */}
       <div
@@ -183,7 +183,7 @@ function Hero() {
             {/* Content */}
             <div ref={contentRef} className="flex flex-col gap-8 pt-8 lg:pt-0">
               <div className="space-y-2">
-                <h1 className="text-5xl font-bold leading-[1.1] text-gray-900 sm:text-6xl lg:text-7xl">
+                <h1 className="text-5xl leading-[1.1] font-bold text-gray-900 sm:text-6xl lg:text-7xl">
                   <span className="block overflow-hidden">
                     <span className="block animate-[slideUp_0.8s_ease-out_0.2s_both]">
                       Conectando
@@ -195,7 +195,7 @@ function Hero() {
                     </span>
                   </span>
                   <span className="block overflow-hidden">
-                    <span className="block animate-[slideUp_0.8s_ease-out_0.5s_both] text-primary">
+                    <span className="text-primary block animate-[slideUp_0.8s_ease-out_0.5s_both]">
                       Restaurantes
                     </span>
                   </span>
@@ -203,14 +203,14 @@ function Hero() {
               </div>
 
               <p
-                className="max-w-xl text-lg leading-relaxed text-gray-600 sm:text-xl animate-[fadeIn_0.6s_ease-out_0.8s_both]"
+                className="max-w-xl animate-[fadeIn_0.6s_ease-out_0.8s_both] text-lg leading-relaxed text-gray-600 sm:text-xl"
                 style={{ filter: 'blur(0px)' }}
               >
                 A plataforma que une freelancers flexíveis a restaurantes que
                 precisam de mão de obra qualificada de forma rápida e confiável.
               </p>
 
-              <div className="flex flex-col gap-4 sm:flex-row animate-[fadeIn_0.5s_ease-out_1s_both]">
+              <div className="flex animate-[fadeIn_0.5s_ease-out_1s_both] flex-col gap-4 sm:flex-row">
                 <button
                   onClick={() => scrollToSection('#para-freelancers')}
                   className="btn-primary group px-8 py-4 text-base"
@@ -227,19 +227,19 @@ function Hero() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-3 animate-[fadeIn_0.5s_ease-out_1.2s_both]">
+              <div className="flex animate-[fadeIn_0.5s_ease-out_1.2s_both] items-center gap-3">
                 <div className="flex -space-x-3">
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-primary to-primary-light text-xs font-bold text-white"
+                      className="from-primary to-primary-light flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br text-xs font-bold text-white"
                     >
                       {String.fromCharCode(64 + i)}
                     </div>
                   ))}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Users className="h-4 w-4 text-primary" />
+                  <Users className="text-primary h-4 w-4" />
                   <span className="font-semibold text-gray-900">+10.000</span>
                   <span>freelancers cadastrados</span>
                 </div>
@@ -262,13 +262,13 @@ function Hero() {
                     className="h-auto w-full object-cover"
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent" />
+                  <div className="from-secondary/20 absolute inset-0 bg-gradient-to-t to-transparent" />
                 </div>
 
-                <div className="animation-delay-200 shadow-card absolute -bottom-6 -left-6 animate-float rounded-xl bg-white p-4">
+                <div className="animation-delay-200 shadow-card animate-float absolute -bottom-6 -left-6 rounded-xl bg-white p-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <span className="text-2xl font-bold text-primary">
+                    <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-lg">
+                      <span className="text-primary text-2xl font-bold">
                         95%
                       </span>
                     </div>
@@ -281,7 +281,7 @@ function Hero() {
                   </div>
                 </div>
 
-                <div className="shadow-card absolute -right-4 -top-4 animate-float rounded-xl bg-white p-4">
+                <div className="shadow-card animate-float absolute -top-4 -right-4 rounded-xl bg-white p-4">
                   <div className="flex items-center gap-2">
                     <div className="flex">
                       {[1, 2, 3, 4, 5].map((i) => (
@@ -305,7 +305,7 @@ function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute right-0 bottom-0 left-0">
         <svg
           viewBox="0 0 1440 120"
           fill="none"
@@ -345,7 +345,7 @@ function ClientLogos() {
     <section className="w-full bg-white py-16">
       <div className="section-container">
         <div className="section-inner">
-          <p className="mb-10 text-center text-sm font-medium uppercase tracking-wider text-gray-500">
+          <p className="mb-10 text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
             Restaurantes que confiam na gente
           </p>
           <div className="grid grid-cols-2 gap-6 opacity-70 sm:grid-cols-3 lg:grid-cols-6">
@@ -379,7 +379,7 @@ function HowItWorks() {
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -411,20 +411,28 @@ function HowItWorks() {
   ]
 
   return (
-    <section id="como-funciona" ref={sectionRef} className="w-full bg-gray-50 py-24">
+    <section
+      id="como-funciona"
+      ref={sectionRef}
+      className="w-full bg-gray-50 py-24"
+    >
       <div className="section-container">
         <div className="section-inner">
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <h2
               className={`mb-6 text-4xl font-bold text-gray-900 transition-all duration-700 sm:text-5xl ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                isVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
               }`}
             >
               Como Funciona
             </h2>
             <p
-              className={`text-lg text-gray-600 transition-all duration-700 delay-100 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              className={`text-lg text-gray-600 transition-all delay-100 duration-700 ${
+                isVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
               }`}
             >
               Em poucos passos, você começa a trabalhar ou encontra os melhores
@@ -438,17 +446,19 @@ function HowItWorks() {
               return (
                 <div
                   key={index}
-                  className={`preserve-3d group relative rounded-2xl bg-white p-8 shadow-card transition-all duration-500 hover:-translate-y-3 hover:shadow-card-hover ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+                  className={`preserve-3d group shadow-card hover:shadow-card-hover relative rounded-2xl bg-white p-8 transition-all duration-500 hover:-translate-y-3 ${
+                    isVisible
+                      ? 'translate-y-0 opacity-100'
+                      : 'translate-y-12 opacity-0'
                   }`}
                   style={{ transitionDelay: `${200 + index * 150}ms` }}
                 >
-                  <div className="absolute -right-4 -top-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-gray-400 transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+                  <div className="group-hover:bg-primary absolute -top-4 -right-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-gray-400 transition-colors duration-300 group-hover:text-white">
                     {index + 1}
                   </div>
 
                   <div
-                    className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br ${step.color} transition-all duration-300 group-hover:rotate-3 group-hover:scale-110`}
+                    className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br ${step.color} transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}
                   >
                     <Icon className="h-8 w-8 text-white" />
                   </div>
@@ -460,11 +470,11 @@ function HowItWorks() {
                     {step.description}
                   </p>
 
-                  <div className="absolute inset-0 rounded-2xl border-2 border-transparent transition-colors duration-300 group-hover:border-primary/20" />
+                  <div className="group-hover:border-primary/20 absolute inset-0 rounded-2xl border-2 border-transparent transition-colors duration-300" />
 
                   {index < steps.length - 1 && (
-                    <div className="absolute top-1/2 -right-4 z-10 hidden -translate-y-1/2 translate-x-full transform md:block">
-                      <ArrowRight className="h-6 w-6 text-primary/30" />
+                    <div className="absolute top-1/2 -right-4 z-10 hidden translate-x-full -translate-y-1/2 transform md:block">
+                      <ArrowRight className="text-primary/30 h-6 w-6" />
                     </div>
                   )}
                 </div>
@@ -473,8 +483,10 @@ function HowItWorks() {
           </div>
 
           <div
-            className={`mt-16 text-center transition-all duration-700 delay-700 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            className={`mt-16 text-center transition-all delay-700 duration-700 ${
+              isVisible
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-8 opacity-0'
             }`}
           >
             <p className="mb-4 text-gray-600">Pronto para começar?</p>
@@ -503,7 +515,7 @@ function ForFreelancers() {
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -534,13 +546,19 @@ function ForFreelancers() {
   ]
 
   return (
-    <section id="para-freelancers" ref={sectionRef} className="w-full overflow-hidden bg-white py-24">
+    <section
+      id="para-freelancers"
+      ref={sectionRef}
+      className="w-full overflow-hidden bg-white py-24"
+    >
       <div className="section-container">
         <div className="section-inner">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div
               className={`relative transition-all duration-1000 ${
-                isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'
+                isVisible
+                  ? 'translate-x-0 opacity-100'
+                  : '-translate-x-20 opacity-0'
               }`}
             >
               <div className="perspective-1000 relative">
@@ -554,17 +572,19 @@ function ForFreelancers() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 </div>
 
-                <div className="-z-10 absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-primary/10" />
-                <div className="-z-10 absolute -left-6 -top-6 h-24 w-24 rounded-full bg-secondary/10" />
+                <div className="bg-primary/10 absolute -right-6 -bottom-6 -z-10 h-32 w-32 rounded-full" />
+                <div className="bg-secondary/10 absolute -top-6 -left-6 -z-10 h-24 w-24 rounded-full" />
 
-                <div className="shadow-card absolute -bottom-4 -left-4 animate-float rounded-xl bg-white p-4">
+                <div className="shadow-card animate-float absolute -bottom-4 -left-4 rounded-xl bg-white p-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100">
                       <Check className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
                       <p className="text-lg font-bold text-gray-900">2.5k+</p>
-                      <p className="text-xs text-gray-500">Trabalhos realizados</p>
+                      <p className="text-xs text-gray-500">
+                        Trabalhos realizados
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -573,22 +593,27 @@ function ForFreelancers() {
 
             <div className="space-y-8">
               <div
-                className={`transition-all duration-700 delay-200 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`transition-all delay-200 duration-700 ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
-                <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+                <span className="bg-primary/10 text-primary mb-4 inline-block rounded-full px-4 py-1.5 text-sm font-semibold">
                   Para Freelancers
                 </span>
-                <h2 className="text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
-                  Trabalhe com <span className="text-primary">flexibilidade</span> e{' '}
+                <h2 className="text-4xl leading-tight font-bold text-gray-900 sm:text-5xl">
+                  Trabalhe com{' '}
+                  <span className="text-primary">flexibilidade</span> e{' '}
                   <span className="text-primary">segurança</span>
                 </h2>
               </div>
 
               <p
-                className={`text-lg text-gray-600 transition-all duration-700 delay-300 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`text-lg text-gray-600 transition-all delay-300 duration-700 ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
                 Seja dono do seu tempo e escolha os projetos que mais combinam
@@ -603,19 +628,23 @@ function ForFreelancers() {
                     <div
                       key={index}
                       className={`group cursor-pointer rounded-xl p-4 transition-all duration-500 hover:bg-gray-50 ${
-                        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                        isVisible
+                          ? 'translate-x-0 opacity-100'
+                          : 'translate-x-8 opacity-0'
                       }`}
                       style={{ transitionDelay: `${400 + index * 100}ms` }}
                     >
                       <div className="flex items-start gap-4">
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary">
-                          <Icon className="h-6 w-6 text-primary transition-colors duration-300 group-hover:text-white" />
+                        <div className="bg-primary/10 group-hover:bg-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110">
+                          <Icon className="text-primary h-6 w-6 transition-colors duration-300 group-hover:text-white" />
                         </div>
                         <div>
-                          <h3 className="mb-1 font-semibold text-gray-900 transition-colors duration-300 group-hover:text-primary">
+                          <h3 className="group-hover:text-primary mb-1 font-semibold text-gray-900 transition-colors duration-300">
                             {benefit.title}
                           </h3>
-                          <p className="text-sm text-gray-600">{benefit.description}</p>
+                          <p className="text-sm text-gray-600">
+                            {benefit.description}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -624,8 +653,10 @@ function ForFreelancers() {
               </div>
 
               <div
-                className={`pt-4 transition-all duration-700 delay-800 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`pt-4 transition-all delay-800 duration-700 ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
                 <Link href="/gigs" className="btn-primary group inline-flex">
@@ -653,7 +684,7 @@ function ForRestaurants() {
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -681,39 +712,47 @@ function ForRestaurants() {
     {
       icon: TrendingUp,
       title: 'Escalabilidade para picos de demanda',
-      description:
-        'Aumente sua equipe rapidamente nos dias de maior movimento',
+      description: 'Aumente sua equipe rapidamente nos dias de maior movimento',
     },
   ]
 
   return (
-    <section id="para-restaurantes" ref={sectionRef} className="w-full overflow-hidden bg-gray-50 py-24">
+    <section
+      id="para-restaurantes"
+      ref={sectionRef}
+      className="w-full overflow-hidden bg-gray-50 py-24"
+    >
       <div className="section-container">
         <div className="section-inner">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="order-2 space-y-8 lg:order-1">
               <div
-                className={`transition-all duration-700 delay-200 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`transition-all delay-200 duration-700 ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
-                <span className="mb-4 inline-block rounded-full bg-secondary/10 px-4 py-1.5 text-sm font-semibold text-secondary">
+                <span className="bg-secondary/10 text-secondary mb-4 inline-block rounded-full px-4 py-1.5 text-sm font-semibold">
                   Para Restaurantes
                 </span>
-                <h2 className="text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
-                  Encontre <span className="text-secondary">staff qualificado</span>{' '}
-                  em minutos
+                <h2 className="text-4xl leading-tight font-bold text-gray-900 sm:text-5xl">
+                  Encontre{' '}
+                  <span className="text-secondary">staff qualificado</span> em
+                  minutos
                 </h2>
               </div>
 
               <p
-                className={`text-lg text-gray-600 transition-all duration-700 delay-300 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`text-lg text-gray-600 transition-all delay-300 duration-700 ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
-                Não perca mais clientes por falta de mão de obra. Com a Trampoja,
-                você encontra freelancers confiáveis e qualificados para
-                qualquer ocasião.
+                Não perca mais clientes por falta de mão de obra. Com a
+                Trampoja, você encontra freelancers confiáveis e qualificados
+                para qualquer ocasião.
               </p>
 
               <div className="space-y-4">
@@ -723,19 +762,23 @@ function ForRestaurants() {
                     <div
                       key={index}
                       className={`group cursor-pointer rounded-xl p-4 transition-all duration-500 hover:bg-white ${
-                        isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
+                        isVisible
+                          ? 'translate-x-0 opacity-100'
+                          : '-translate-x-8 opacity-0'
                       }`}
                       style={{ transitionDelay: `${400 + index * 100}ms` }}
                     >
                       <div className="flex items-start gap-4">
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-secondary/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-secondary">
-                          <Icon className="h-6 w-6 text-secondary transition-colors duration-300 group-hover:text-white" />
+                        <div className="bg-secondary/10 group-hover:bg-secondary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110">
+                          <Icon className="text-secondary h-6 w-6 transition-colors duration-300 group-hover:text-white" />
                         </div>
                         <div>
-                          <h3 className="mb-1 font-semibold text-gray-900 transition-colors duration-300 group-hover:text-secondary">
+                          <h3 className="group-hover:text-secondary mb-1 font-semibold text-gray-900 transition-colors duration-300">
                             {benefit.title}
                           </h3>
-                          <p className="text-sm text-gray-600">{benefit.description}</p>
+                          <p className="text-sm text-gray-600">
+                            {benefit.description}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -744,13 +787,15 @@ function ForRestaurants() {
               </div>
 
               <div
-                className={`pt-4 transition-all duration-700 delay-800 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`pt-4 transition-all delay-800 duration-700 ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
                 <Link
                   href="/restaurant"
-                  className="btn-primary group inline-flex bg-secondary hover:bg-secondary/90"
+                  className="btn-primary group bg-secondary hover:bg-secondary/90 inline-flex"
                 >
                   Publicar Vaga Agora
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -760,7 +805,9 @@ function ForRestaurants() {
 
             <div
               className={`relative order-1 transition-all duration-1000 lg:order-2 ${
-                isVisible ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'
+                isVisible
+                  ? 'translate-x-0 opacity-100'
+                  : 'translate-x-20 opacity-0'
               }`}
             >
               <div className="perspective-1000 relative">
@@ -773,17 +820,19 @@ function ForRestaurants() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 </div>
 
-                <div className="-z-10 absolute -bottom-6 -left-6 h-32 w-32 rounded-full bg-secondary/10" />
-                <div className="-z-10 absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/10" />
+                <div className="bg-secondary/10 absolute -bottom-6 -left-6 -z-10 h-32 w-32 rounded-full" />
+                <div className="bg-primary/10 absolute -top-6 -right-6 -z-10 h-24 w-24 rounded-full" />
 
-                <div className="animation-delay-200 shadow-card absolute -bottom-4 -right-4 animate-float rounded-xl bg-white p-4">
+                <div className="animation-delay-200 shadow-card animate-float absolute -right-4 -bottom-4 rounded-xl bg-white p-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                      <TrendingUp className="h-5 w-5 text-primary" />
+                    <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                      <TrendingUp className="text-primary h-5 w-5" />
                     </div>
                     <div>
                       <p className="text-lg font-bold text-gray-900">15min</p>
-                      <p className="text-xs text-gray-500">Tempo médio de match</p>
+                      <p className="text-xs text-gray-500">
+                        Tempo médio de match
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -808,7 +857,7 @@ function Testimonials() {
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -851,20 +900,28 @@ function Testimonials() {
   ]
 
   return (
-    <section id="depoimentos" ref={sectionRef} className="w-full bg-white py-24">
+    <section
+      id="depoimentos"
+      ref={sectionRef}
+      className="w-full bg-white py-24"
+    >
       <div className="section-container">
         <div className="section-inner">
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <h2
               className={`mb-6 text-4xl font-bold text-gray-900 transition-all duration-700 sm:text-5xl ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                isVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
               }`}
             >
               O Que Dizem Nossos Usuários
             </h2>
             <p
-              className={`text-lg text-gray-600 transition-all duration-700 delay-100 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              className={`text-lg text-gray-600 transition-all delay-100 duration-700 ${
+                isVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
               }`}
             >
               Histórias reais de freelancers e restaurantes que se conectaram
@@ -876,7 +933,9 @@ function Testimonials() {
               <div
                 key={index}
                 className={`card-hover relative rounded-2xl bg-gray-50 p-8 transition-all duration-700 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: `${200 + index * 120}ms` }}
               >
@@ -932,7 +991,7 @@ function FAQ() {
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -970,17 +1029,23 @@ function FAQ() {
             {/* left support card */}
             <div
               className={`transition-all duration-1000 ${
-                isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'
+                isVisible
+                  ? 'translate-x-0 opacity-100'
+                  : '-translate-x-20 opacity-0'
               }`}
             >
-              <div className="overflow-hidden rounded-3xl bg-white shadow-card">
+              <div className="shadow-card overflow-hidden rounded-3xl bg-white">
                 <div className="h-56 w-full bg-gradient-to-br from-orange-50 to-emerald-50" />
                 <div className="p-8">
-                  <h3 className="text-xl font-bold text-gray-900">Ainda tem dúvidas?</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Ainda tem dúvidas?
+                  </h3>
                   <p className="mt-2 text-gray-600">
                     Nossa equipe está pronta para ajudar você.
                   </p>
-                  <button className="btn-secondary mt-6 w-full">Falar com suporte →</button>
+                  <button className="btn-secondary mt-6 w-full">
+                    Falar com suporte →
+                  </button>
                 </div>
               </div>
             </div>
@@ -989,7 +1054,9 @@ function FAQ() {
             <div>
               <h2
                 className={`mb-6 text-4xl font-bold text-gray-900 transition-all duration-700 sm:text-5xl ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
                 }`}
               >
                 Dúvidas Frequentes
@@ -1001,8 +1068,10 @@ function FAQ() {
                   return (
                     <div
                       key={index}
-                      className={`overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-700 ${
-                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                      className={`shadow-card overflow-hidden rounded-2xl bg-white transition-all duration-700 ${
+                        isVisible
+                          ? 'translate-y-0 opacity-100'
+                          : 'translate-y-8 opacity-0'
                       }`}
                       style={{ transitionDelay: `${200 + index * 120}ms` }}
                     >
@@ -1017,7 +1086,7 @@ function FAQ() {
                         </span>
                         <span
                           className={`flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-all duration-300 ${
-                            isOpen ? 'rotate-45 bg-primary text-white' : ''
+                            isOpen ? 'bg-primary rotate-45 text-white' : ''
                           }`}
                           aria-hidden
                         >
@@ -1031,7 +1100,9 @@ function FAQ() {
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <div className="px-6 pb-6 text-gray-600">{item.a}</div>
+                          <div className="px-6 pb-6 text-gray-600">
+                            {item.a}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1051,7 +1122,7 @@ function CTABanner() {
     <section className="w-full bg-white py-24">
       <div className="section-container">
         <div className="section-inner">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-secondary p-10 text-white sm:p-14">
+          <div className="from-primary via-primary to-secondary relative overflow-hidden rounded-3xl bg-gradient-to-br p-10 text-white sm:p-14">
             <div
               className="absolute inset-0 opacity-20"
               style={{
@@ -1061,13 +1132,13 @@ function CTABanner() {
             />
 
             {/* top-left label */}
-            <div className="absolute left-10 top-10 hidden items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur sm:inline-flex">
+            <div className="absolute top-10 left-10 hidden items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur sm:inline-flex">
               <span className="h-2 w-2 rounded-full bg-white/80" />
               Comece hoje mesmo
             </div>
 
             <div className="relative z-10 text-center">
-              <h2 className="text-4xl font-bold leading-tight sm:text-5xl">
+              <h2 className="text-4xl leading-tight font-bold sm:text-5xl">
                 Pronto para Começar?
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-white/85">
@@ -1076,11 +1147,17 @@ function CTABanner() {
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link href="/gigs" className="btn-secondary bg-white text-gray-900">
+                <Link
+                  href="/gigs"
+                  className="btn-secondary bg-white text-gray-900"
+                >
                   Quero Trabalhar
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
-                <Link href="/restaurant" className="btn-primary bg-secondary hover:bg-secondary/90">
+                <Link
+                  href="/restaurant"
+                  className="btn-primary bg-secondary hover:bg-secondary/90"
+                >
                   Preciso de Gente
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -1125,16 +1202,32 @@ function Footer() {
                 transforma a forma de trabalhar no setor de alimentação.
               </p>
               <div className="mt-5 flex items-center gap-3 text-gray-400">
-                <a href="#" aria-label="Instagram" className="rounded-lg p-2 hover:bg-gray-50">
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="rounded-lg p-2 hover:bg-gray-50"
+                >
                   ◎
                 </a>
-                <a href="#" aria-label="Facebook" className="rounded-lg p-2 hover:bg-gray-50">
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="rounded-lg p-2 hover:bg-gray-50"
+                >
                   ◇
                 </a>
-                <a href="#" aria-label="LinkedIn" className="rounded-lg p-2 hover:bg-gray-50">
+                <a
+                  href="#"
+                  aria-label="LinkedIn"
+                  className="rounded-lg p-2 hover:bg-gray-50"
+                >
                   ▣
                 </a>
-                <a href="#" aria-label="Twitter" className="rounded-lg p-2 hover:bg-gray-50">
+                <a
+                  href="#"
+                  aria-label="Twitter"
+                  className="rounded-lg p-2 hover:bg-gray-50"
+                >
                   ⌁
                 </a>
               </div>
@@ -1142,7 +1235,9 @@ function Footer() {
 
             {/* columns */}
             <div>
-              <h3 className="text-sm font-bold text-gray-900">Para Freelancers</h3>
+              <h3 className="text-sm font-bold text-gray-900">
+                Para Freelancers
+              </h3>
               <ul className="mt-4 space-y-3 text-sm text-gray-600">
                 <li>
                   <a className="hover:text-primary" href="#como-funciona">
@@ -1168,7 +1263,9 @@ function Footer() {
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-gray-900">Para Restaurantes</h3>
+              <h3 className="text-sm font-bold text-gray-900">
+                Para Restaurantes
+              </h3>
               <ul className="mt-4 space-y-3 text-sm text-gray-600">
                 <li>
                   <a className="hover:text-primary" href="#para-restaurantes">
@@ -1202,33 +1299,35 @@ function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-primary" href="#">
+                  <Link className="hover:text-primary" href="/contato">
                     Contato
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-primary" href="#">
+                  <Link className="hover:text-primary" href="/termos">
                     Termos de Uso
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-primary" href="#">
+                  <Link className="hover:text-primary" href="/privacidade">
                     Privacidade
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
 
             {/* newsletter */}
             <div>
-              <h3 className="text-sm font-bold text-gray-900">Fique por Dentro</h3>
+              <h3 className="text-sm font-bold text-gray-900">
+                Fique por Dentro
+              </h3>
               <p className="mt-4 text-sm text-gray-600">
                 Receba as últimas vagas e novidades diretamente no seu e-mail.
               </p>
               <div className="mt-4 flex items-center gap-3">
                 <input
                   placeholder="Seu e-mail"
-                  className="h-11 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm outline-none focus:border-primary"
+                  className="focus:border-primary h-11 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm outline-none"
                 />
                 <button className="btn-primary h-11 px-5">
                   Inscrever
@@ -1241,12 +1340,12 @@ function Footer() {
           <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-gray-100 pt-8 text-sm text-gray-500 md:flex-row md:items-center">
             <p>© 2026 Trampoja. Todos os direitos reservados.</p>
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-primary">
+              <Link href="/termos" className="hover:text-primary">
                 Termos de Serviço
-              </a>
-              <a href="#" className="hover:text-primary">
+              </Link>
+              <Link href="/privacidade" className="hover:text-primary">
                 Política de Privacidade
-              </a>
+              </Link>
             </div>
           </div>
         </div>

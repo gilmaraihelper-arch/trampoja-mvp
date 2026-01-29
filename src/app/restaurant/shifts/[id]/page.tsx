@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { FavoriteInviteActions } from '@/components/trampoja/favorite-invite-actions'
 import { InviteFavoritesPanel } from '@/components/trampoja/invite-favorites-panel'
+import { InvitesPanel } from '@/components/trampoja/invites-panel'
 import { formatDateTime } from '@/utils/format'
 
 type PageProps = {
@@ -42,8 +43,8 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
             {shift.title}
           </h1>
           <p className="text-muted-foreground mt-1 text-sm sm:mt-2 sm:text-base">
-            {shift.neighborhood ?? 'Curitiba'} • {formatDateTime(shift.startsAt)} →{' '}
-            {formatDateTime(shift.endsAt)}
+            {shift.neighborhood ?? 'Curitiba'} •{' '}
+            {formatDateTime(shift.startsAt)} → {formatDateTime(shift.endsAt)}
           </p>
         </div>
 
@@ -143,6 +144,12 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
           </Card>
 
           <InviteFavoritesPanel
+            restaurantId="rest_1001"
+            shiftId={id}
+            freelancers={freelancers}
+          />
+
+          <InvitesPanel
             restaurantId="rest_1001"
             shiftId={id}
             freelancers={freelancers}
