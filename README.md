@@ -26,18 +26,13 @@ Marketplace de **taxas/turnos** para restaurantes, com foco inicial em **Curitib
 
 ## Dev (local)
 
-1) Instale dependências:
-```bash
-pnpm i
-```
+Setup completo em: **SETUP.md**.
 
-2) Copie o env:
+Quickstart:
 ```bash
-cp .env.example .env.local
-```
-
-3) Rode:
-```bash
+corepack enable || true
+pnpm install
+pnpm db:migrate
 pnpm dev
 ```
 
