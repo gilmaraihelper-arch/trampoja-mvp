@@ -18,6 +18,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -41,6 +43,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
 }
 
 :root {
@@ -212,4 +215,177 @@
   .preserve-3d {
     transform-style: preserve-3d;
   }
+}
+
+/* ------------------------------
+   Marketing landing page (ZIP)
+   Scoped under .marketing to avoid impacting the app UI.
+-------------------------------- */
+
+.marketing {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+
+  /* ZIP palette */
+  --primary: 17 94% 54%;
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 17 94% 64%;
+  --primary-dark: 17 94% 44%;
+
+  --secondary: 162 70% 12%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 40%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 9%;
+
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 17 94% 54%;
+
+  --radius: 0.625rem;
+
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.10);
+  --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+@layer components {
+  .marketing .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 font-semibold text-white transition-all duration-300;
+  }
+
+  .marketing .btn-primary:hover {
+    @apply bg-primary-dark -translate-y-0.5;
+    box-shadow: 0 8px 30px rgba(248, 91, 28, 0.4);
+  }
+
+  .marketing .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border-2 border-gray-200 bg-white px-6 py-3 font-semibold text-gray-900 transition-all duration-300;
+  }
+
+  .marketing .btn-secondary:hover {
+    @apply -translate-y-0.5 border-primary text-primary;
+  }
+
+  .marketing .section-container {
+    @apply w-full px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  .marketing .section-inner {
+    @apply mx-auto max-w-7xl;
+  }
+
+  .marketing .glass-effect {
+    @apply bg-white/90 backdrop-blur-xl;
+  }
+
+  .marketing .card-hover {
+    @apply transition-all duration-400;
+  }
+
+  .marketing .card-hover:hover {
+    @apply -translate-y-3;
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .marketing .link-underline {
+    @apply relative;
+  }
+
+  .marketing .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 h-0.5 w-0 bg-primary transition-all duration-300;
+    transform: translateX(-50%);
+  }
+
+  .marketing .link-underline:hover::after {
+    @apply w-full;
+  }
+
+  .marketing .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .marketing .shadow-card-hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+@layer utilities {
+  .marketing .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .marketing .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .marketing .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .marketing .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .marketing .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .marketing .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .marketing .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .marketing .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .marketing .animate-float {
+    animation: marketing-float 6s ease-in-out infinite;
+  }
+}
+
+@keyframes marketing-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* App.css resets (ZIP) scoped */
+.marketing img {
+  max-width: 100%;
+  height: auto;
+}
+
+.marketing *:focus-visible {
+  outline: 2px solid #f85b1c;
+  outline-offset: 2px;
+}
+
+.marketing button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+.marketing a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.marketing ul,
+.marketing ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

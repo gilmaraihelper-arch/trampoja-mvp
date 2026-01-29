@@ -1,10 +1,18 @@
-import { MarketingShell } from '@/components/trampoja/marketing-shell'
-import { LandingSections } from '@/components/trampoja/landing/sections'
+import { Bricolage_Grotesque } from 'next/font/google'
+
+import { MarketingLanding } from '@/components/marketing/MarketingLanding'
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function HomePage() {
   return (
-    <MarketingShell>
-      <LandingSections />
-    </MarketingShell>
+    <div className={bricolage.className}>
+      <div className="marketing">
+        <MarketingLanding />
+      </div>
+    </div>
   )
 }
