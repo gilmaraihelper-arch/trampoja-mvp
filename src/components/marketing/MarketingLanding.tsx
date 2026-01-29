@@ -1,5 +1,7 @@
 'use client'
 
+/* eslint-disable @next/next/no-img-element */
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -78,11 +80,15 @@ function Navigation() {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button (no Kimi link é button) */}
           <div className="hidden lg:block">
-            <Link href="/gigs" className="btn-primary text-sm">
+            <button
+              type="button"
+              className="btn-primary text-sm"
+              onClick={() => scrollToSection('#para-freelancers')}
+            >
               Cadastrar
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -118,9 +124,16 @@ function Navigation() {
                 {link.label}
               </button>
             ))}
-            <Link href="/gigs" className="btn-primary mt-4 text-center text-sm">
+            <button
+              type="button"
+              className="btn-primary mt-4 text-center text-sm"
+              onClick={() => {
+                scrollToSection('#para-freelancers')
+                setIsMobileMenuOpen(false)
+              }}
+            >
               Cadastrar
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -310,22 +323,41 @@ function Hero() {
 }
 
 function ClientLogos() {
-  const logos = ['Outback', 'Coco Bambu', 'Madeiro', 'Madero', 'Habibs']
+  const logos = [
+    { label: 'Bistro Central' },
+    { label: 'Café do Ponto' },
+    { label: 'Pizza Italia' },
+    { label: 'Sushi House' },
+    { label: 'Gelato Art' },
+    { label: 'Burger King' },
+    { label: 'Bistro Central' },
+    { label: 'Café do Ponto' },
+    { label: 'Pizza Italia' },
+    { label: 'Sushi House' },
+    { label: 'Gelato Art' },
+    { label: 'Burger King' },
+  ]
+
+  // “Icons” (no Kimi link eles são imagens). Aqui usamos glyphs neutros.
+  const iconGlyphs = ['🍽️', '☕', '🍕', '🍣', '🍨', '🍔']
 
   return (
     <section className="w-full bg-white py-16">
       <div className="section-container">
         <div className="section-inner">
           <p className="mb-10 text-center text-sm font-medium uppercase tracking-wider text-gray-500">
-            Restaurantes que confiam
+            Restaurantes que confiam na gente
           </p>
-          <div className="grid grid-cols-2 gap-6 opacity-70 sm:grid-cols-3 lg:grid-cols-5">
-            {logos.map((name) => (
+          <div className="grid grid-cols-2 gap-6 opacity-70 sm:grid-cols-3 lg:grid-cols-6">
+            {logos.map((item, idx) => (
               <div
-                key={name}
-                className="flex items-center justify-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-6 text-sm font-semibold text-gray-500"
+                key={`${item.label}-${idx}`}
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-gray-100 bg-gray-50 px-4 py-6 text-sm font-semibold text-gray-500"
               >
-                {name}
+                <span aria-hidden className="text-base">
+                  {iconGlyphs[idx % iconGlyphs.length]}
+                </span>
+                <span>{item.label}</span>
               </div>
             ))}
           </div>
@@ -783,33 +815,38 @@ function Testimonials() {
     return () => observer.disconnect()
   }, [])
 
-  const testimonials = [
+  const items = [
     {
-      name: 'Marina Souza',
-      role: 'Chef Freelancer',
-      content:
-        'A Trampoja mudou minha vida! Agora consigo escolher quando trabalhar e ainda ganho muito mais do que antes.',
-      rating: 5,
-      avatar: 'MS',
-      color: 'from-primary to-primary-light',
+      quote:
+        '"Consegui trabalhos flexíveis que se adaptam à minha rotina de estudante. A plataforma é super intuitiva!"',
+      name: 'Ana Carolina',
+      role: 'Garçonete Freelancer',
+      initials: 'AC',
+      tint: 'from-primary to-primary-light',
     },
     {
-      name: 'Carlos Mendes',
+      quote:
+        '"Em dias de pico, encontro staff confiável em minutos. Salvou meu restaurante várias vezes!"',
+      name: 'Roberto Silva',
       role: 'Dono de Restaurante',
-      content:
-        'Encontro funcionários qualificados em questão de minutos. Nunca mais tive problemas com falta de staff nos fins de semana.',
-      rating: 5,
-      avatar: 'CM',
-      color: 'from-secondary to-secondary/70',
+      initials: 'RS',
+      tint: 'from-secondary to-secondary/70',
     },
     {
-      name: 'Ana Costa',
-      role: 'Garçonete',
-      content:
-        'O sistema de avaliações me ajudou a conseguir melhores oportunidades. Recomendo para todos os freelancers!',
-      rating: 5,
-      avatar: 'AC',
-      color: 'from-primary to-primary-light',
+      quote:
+        '"Avaliações transparentes me ajudaram a construir uma reputação e conseguir mais oportunidades."',
+      name: 'Marcos Oliveira',
+      role: 'Chef Freelancer',
+      initials: 'MO',
+      tint: 'from-primary to-primary-light',
+    },
+    {
+      quote:
+        '"Reduzi em 40% os custos com folha de pagamento usando freelancers nos dias de maior demanda."',
+      name: 'Juliana Costa',
+      role: 'Gerente de Restaurante',
+      initials: 'JC',
+      tint: 'from-secondary to-secondary/70',
     },
   ]
 
@@ -823,40 +860,33 @@ function Testimonials() {
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
             >
-              O que dizem nossos usuários
+              O Que Dizem Nossos Usuários
             </h2>
             <p
               className={`text-lg text-gray-600 transition-all duration-700 delay-100 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
             >
-              Histórias reais de quem já está transformando sua carreira
+              Histórias reais de freelancers e restaurantes que se conectaram
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-3">
-            {testimonials.map((t, index) => (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {items.map((t, index) => (
               <div
                 key={index}
                 className={`card-hover relative rounded-2xl bg-gray-50 p-8 transition-all duration-700 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                 }`}
-                style={{ transitionDelay: `${200 + index * 150}ms` }}
+                style={{ transitionDelay: `${200 + index * 120}ms` }}
               >
-                <div className="mb-6 flex items-center gap-4">
-                  <div
-                    className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${t.color} text-sm font-bold text-white`}
-                  >
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">{t.name}</p>
-                    <p className="text-sm text-gray-500">{t.role}</p>
-                  </div>
+                {/* top image placeholder */}
+                <div className="mb-6 overflow-hidden rounded-xl bg-white">
+                  <div className="h-28 w-full bg-gradient-to-br from-gray-100 to-gray-50" />
                 </div>
 
                 <div className="mb-4 flex">
-                  {Array.from({ length: t.rating }).map((_, i) => (
+                  {Array.from({ length: 5 }).map((_, i) => (
                     <svg
                       key={i}
                       className="h-4 w-4 fill-current text-yellow-400"
@@ -867,7 +897,19 @@ function Testimonials() {
                   ))}
                 </div>
 
-                <p className="leading-relaxed text-gray-600">“{t.content}”</p>
+                <p className="mb-6 leading-relaxed text-gray-600">{t.quote}</p>
+
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${t.tint} text-sm font-bold text-white`}
+                  >
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">{t.name}</p>
+                    <p className="text-sm text-gray-500">{t.role}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -899,24 +941,24 @@ function FAQ() {
 
   const faqs = [
     {
-      question: 'Como funciona o pagamento?',
-      answer:
-        'No MVP, o pagamento é combinado diretamente entre freelancer e restaurante (Pix/dinheiro). Em breve, pagamentos pelo app.',
+      q: 'Como me cadastro como freelancer?',
+      a: 'O cadastro é simples e leva menos de 5 minutos. Clique em "Quero Trabalhar", preencha seus dados, adicione suas habilidades e comece a se candidatar às vagas disponíveis na sua região.',
     },
     {
-      question: 'A Trampoja é gratuita?',
-      answer:
-        'Sim! Criar perfil e explorar oportunidades é gratuito. Futuramente teremos planos para restaurantes com recursos avançados.',
+      q: 'Quanto custa para restaurantes publicarem vagas?',
+      a: 'Oferecemos planos flexíveis. Você pode começar gratuitamente com vagas básicas ou escolher um plano premium para mais visibilidade e funcionalidades avançadas.',
     },
     {
-      question: 'Como são feitas as avaliações?',
-      answer:
-        'Após cada trabalho, freelancer e restaurante podem se avaliar. Isso cria transparência e melhora a qualidade dos matches.',
+      q: 'Como funciona o pagamento?',
+      a: 'O pagamento é processado de forma segura pela plataforma. O freelancer recebe após a conclusão do trabalho, e o restaurante só paga quando o serviço é confirmado.',
     },
     {
-      question: 'Em quais cidades está disponível?',
-      answer:
-        'Estamos começando por Curitiba. Depois vamos expandir para outras capitais do Brasil.',
+      q: 'Posso escolher meus horários?',
+      a: 'Sim! Como freelancer, você tem total flexibilidade para escolher quando quer trabalhar. Veja as vagas disponíveis e se candidate apenas nas que se encaixam na sua agenda.',
+    },
+    {
+      q: 'Como garantem a qualidade dos freelancers?',
+      a: 'Todos os freelancers passam por uma verificação de perfil. Além disso, o sistema de avaliações permite que restaurantes avaliem o trabalho, criando uma comunidade de confiança.',
     },
   ]
 
@@ -924,65 +966,79 @@ function FAQ() {
     <section id="faq" ref={sectionRef} className="w-full bg-gray-50 py-24">
       <div className="section-container">
         <div className="section-inner">
-          <div className="mx-auto mb-16 max-w-2xl text-center">
-            <h2
-              className={`mb-6 text-4xl font-bold text-gray-900 transition-all duration-700 sm:text-5xl ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+            {/* left support card */}
+            <div
+              className={`transition-all duration-1000 ${
+                isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'
               }`}
             >
-              Perguntas Frequentes
-            </h2>
-            <p
-              className={`text-lg text-gray-600 transition-all duration-700 delay-100 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`}
-            >
-              Tire suas dúvidas sobre a Trampoja
-            </p>
-          </div>
+              <div className="overflow-hidden rounded-3xl bg-white shadow-card">
+                <div className="h-56 w-full bg-gradient-to-br from-orange-50 to-emerald-50" />
+                <div className="p-8">
+                  <h3 className="text-xl font-bold text-gray-900">Ainda tem dúvidas?</h3>
+                  <p className="mt-2 text-gray-600">
+                    Nossa equipe está pronta para ajudar você.
+                  </p>
+                  <button className="btn-secondary mt-6 w-full">Falar com suporte →</button>
+                </div>
+              </div>
+            </div>
 
-          <div className="mx-auto max-w-3xl space-y-4">
-            {faqs.map((faq, index) => {
-              const isOpen = openIndex === index
-              return (
-                <div
-                  key={index}
-                  className={`overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-700 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                  }`}
-                  style={{ transitionDelay: `${200 + index * 120}ms` }}
-                >
-                  <button
-                    className="flex w-full items-center justify-between gap-4 p-6 text-left"
-                    onClick={() => setOpenIndex((v) => (v === index ? null : index))}
-                  >
-                    <span className="text-lg font-semibold text-gray-900">
-                      {faq.question}
-                    </span>
-                    <span
-                      className={`flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-all duration-300 ${
-                        isOpen ? 'rotate-45 bg-primary text-white' : ''
+            {/* right FAQ */}
+            <div>
+              <h2
+                className={`mb-6 text-4xl font-bold text-gray-900 transition-all duration-700 sm:text-5xl ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}
+              >
+                Dúvidas Frequentes
+              </h2>
+
+              <div className="space-y-4">
+                {faqs.map((item, index) => {
+                  const isOpen = openIndex === index
+                  return (
+                    <div
+                      key={index}
+                      className={`overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-700 ${
+                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                       }`}
-                      aria-hidden
+                      style={{ transitionDelay: `${200 + index * 120}ms` }}
                     >
-                      +
-                    </span>
-                  </button>
+                      <button
+                        className="flex w-full items-center justify-between gap-4 p-6 text-left"
+                        onClick={() =>
+                          setOpenIndex((v) => (v === index ? null : index))
+                        }
+                      >
+                        <span className="text-lg font-semibold text-gray-900">
+                          {item.q}
+                        </span>
+                        <span
+                          className={`flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-all duration-300 ${
+                            isOpen ? 'rotate-45 bg-primary text-white' : ''
+                          }`}
+                          aria-hidden
+                        >
+                          +
+                        </span>
+                      </button>
 
-                  <div
-                    className={`grid transition-all duration-300 ${
-                      isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="px-6 pb-6 text-gray-600">
-                        {faq.answer}
+                      <div
+                        className={`grid transition-all duration-300 ${
+                          isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="px-6 pb-6 text-gray-600">{item.a}</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              )
-            })}
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -996,48 +1052,53 @@ function CTABanner() {
       <div className="section-container">
         <div className="section-inner">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-secondary p-10 text-white sm:p-14">
-            <div className="absolute inset-0 opacity-20"
+            <div
+              className="absolute inset-0 opacity-20"
               style={{
                 backgroundImage:
                   'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35) 0, transparent 35%), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.25) 0, transparent 35%)',
               }}
             />
 
-            <div className="relative z-10 grid gap-10 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
-              <div className="space-y-5">
-                <h2 className="text-4xl font-bold leading-tight sm:text-5xl">
-                  Pronto para transformar sua rotina?
-                </h2>
-                <p className="max-w-2xl text-white/85">
-                  Crie seu perfil grátis e comece hoje mesmo a encontrar oportunidades
-                  ou staff qualificado.
-                </p>
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Link
-                    href="/gigs"
-                    className="btn-secondary bg-white text-gray-900 hover:border-white hover:text-gray-900"
-                  >
-                    Quero Trabalhar
-                  </Link>
-                  <Link
-                    href="/restaurant"
-                    className="btn-primary bg-secondary hover:bg-secondary/90"
-                  >
-                    Sou Restaurante
-                  </Link>
-                </div>
+            {/* top-left label */}
+            <div className="absolute left-10 top-10 hidden items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur sm:inline-flex">
+              <span className="h-2 w-2 rounded-full bg-white/80" />
+              Comece hoje mesmo
+            </div>
+
+            <div className="relative z-10 text-center">
+              <h2 className="text-4xl font-bold leading-tight sm:text-5xl">
+                Pronto para Começar?
+              </h2>
+              <p className="mx-auto mt-4 max-w-3xl text-white/85">
+                Junte-se a milhares de freelancers e restaurantes que já estão
+                transformando a forma de trabalhar no setor de alimentação.
+              </p>
+
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <Link href="/gigs" className="btn-secondary bg-white text-gray-900">
+                  Quero Trabalhar
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+                <Link href="/restaurant" className="btn-primary bg-secondary hover:bg-secondary/90">
+                  Preciso de Gente
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </div>
 
-              <div className="rounded-2xl bg-white/10 p-6 backdrop-blur">
-                <p className="text-sm font-semibold uppercase tracking-wider text-white/80">
-                  MVP
-                </p>
-                <ul className="mt-4 space-y-3 text-white/90">
-                  <li>• Pagamento fora do app (Pix/dinheiro)</li>
-                  <li>• Começando por Curitiba</li>
-                  <li>• Feed de vagas + candidatura</li>
-                  <li>• Painel restaurante (turnos, candidatos, convites)</li>
-                </ul>
+              <div className="mx-auto mt-10 grid max-w-3xl gap-4 sm:grid-cols-3">
+                <div className="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-5 py-4 backdrop-blur">
+                  <span aria-hidden>✅</span>
+                  <span className="font-semibold">Cadastro gratuito</span>
+                </div>
+                <div className="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-5 py-4 backdrop-blur">
+                  <span aria-hidden>💸</span>
+                  <span className="font-semibold">Sem taxa de adesão</span>
+                </div>
+                <div className="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-5 py-4 backdrop-blur">
+                  <span aria-hidden>🕘</span>
+                  <span className="font-semibold">Suporte 24/7</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1049,31 +1110,144 @@ function CTABanner() {
 
 function Footer() {
   return (
-    <footer className="w-full border-t border-gray-100 bg-white py-12">
+    <footer className="w-full bg-white py-16">
       <div className="section-container">
-        <div className="section-inner flex flex-col items-start justify-between gap-6 md:flex-row">
-          <div>
-            <div className="text-xl font-bold">
-              <span className="text-primary">tramp</span>
-              <span className="text-gray-900">oja</span>
+        <div className="section-inner">
+          <div className="grid gap-10 border-t border-gray-100 pt-12 lg:grid-cols-[1.2fr_.9fr_.9fr_.9fr_1.2fr]">
+            {/* brand */}
+            <div>
+              <Link href="#" className="text-xl font-bold">
+                <span className="text-primary">tramp</span>
+                <span className="text-gray-900">oja</span>
+              </Link>
+              <p className="mt-3 max-w-sm text-sm text-gray-500">
+                Conectando talentos e restaurantes desde 2023. A plataforma que
+                transforma a forma de trabalhar no setor de alimentação.
+              </p>
+              <div className="mt-5 flex items-center gap-3 text-gray-400">
+                <a href="#" aria-label="Instagram" className="rounded-lg p-2 hover:bg-gray-50">
+                  ◎
+                </a>
+                <a href="#" aria-label="Facebook" className="rounded-lg p-2 hover:bg-gray-50">
+                  ◇
+                </a>
+                <a href="#" aria-label="LinkedIn" className="rounded-lg p-2 hover:bg-gray-50">
+                  ▣
+                </a>
+                <a href="#" aria-label="Twitter" className="rounded-lg p-2 hover:bg-gray-50">
+                  ⌁
+                </a>
+              </div>
             </div>
-            <p className="mt-2 max-w-sm text-sm text-gray-500">
-              Conectando freelancers e restaurantes — rápido, confiável e sem
-              burocracia.
-            </p>
+
+            {/* columns */}
+            <div>
+              <h3 className="text-sm font-bold text-gray-900">Para Freelancers</h3>
+              <ul className="mt-4 space-y-3 text-sm text-gray-600">
+                <li>
+                  <a className="hover:text-primary" href="#como-funciona">
+                    Como Funciona
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#para-freelancers">
+                    Criar Perfil
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Vagas Disponíveis
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Dicas e Blog
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-gray-900">Para Restaurantes</h3>
+              <ul className="mt-4 space-y-3 text-sm text-gray-600">
+                <li>
+                  <a className="hover:text-primary" href="#para-restaurantes">
+                    Publicar Vaga
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Planos e Preços
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Cases de Sucesso
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Central de Ajuda
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-gray-900">Empresa</h3>
+              <ul className="mt-4 space-y-3 text-sm text-gray-600">
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Sobre Nós
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Contato
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Termos de Uso
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Privacidade
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* newsletter */}
+            <div>
+              <h3 className="text-sm font-bold text-gray-900">Fique por Dentro</h3>
+              <p className="mt-4 text-sm text-gray-600">
+                Receba as últimas vagas e novidades diretamente no seu e-mail.
+              </p>
+              <div className="mt-4 flex items-center gap-3">
+                <input
+                  placeholder="Seu e-mail"
+                  className="h-11 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm outline-none focus:border-primary"
+                />
+                <button className="btn-primary h-11 px-5">
+                  Inscrever
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-2 text-sm text-gray-600">
-            <Link href="/gigs" className="hover:text-primary">
-              Vagas
-            </Link>
-            <Link href="/restaurant" className="hover:text-primary">
-              Restaurante
-            </Link>
-          </div>
-
-          <div className="text-sm text-gray-500">
-            © {new Date().getFullYear()} Trampoja. Todos os direitos reservados.
+          <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-gray-100 pt-8 text-sm text-gray-500 md:flex-row md:items-center">
+            <p>© 2026 Trampoja. Todos os direitos reservados.</p>
+            <div className="flex items-center gap-6">
+              <a href="#" className="hover:text-primary">
+                Termos de Serviço
+              </a>
+              <a href="#" className="hover:text-primary">
+                Política de Privacidade
+              </a>
+            </div>
           </div>
         </div>
       </div>
