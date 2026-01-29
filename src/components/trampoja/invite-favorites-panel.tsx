@@ -159,7 +159,7 @@ export function InviteFavoritesPanel({
       <CardHeader>
         <CardTitle className="text-base">Convidar favoritos</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-col gap-4">
         {favorites.length ? (
           <>
             <div className="flex items-center gap-2">
@@ -222,17 +222,19 @@ export function InviteFavoritesPanel({
               })}
             </div>
 
-            <Button
-              type="button"
-              className="w-full"
-              disabled={pending || selectedIds.length === 0}
-              onClick={sendInvites}
-            >
-              Enviar convites ({selectedIds.length})
-            </Button>
+            <div className="sticky bottom-0 -mx-6 mt-2 border-t bg-background px-6 py-3">
+              <Button
+                type="button"
+                className="w-full"
+                disabled={pending || selectedIds.length === 0}
+                onClick={sendInvites}
+              >
+                Enviar convites ({selectedIds.length})
+              </Button>
 
-            <div className="text-muted-foreground text-xs">
-              Convites expiram automaticamente em 60 minutos.
+              <div className="text-muted-foreground mt-2 text-center text-xs">
+                Convites expiram automaticamente em 60 minutos.
+              </div>
             </div>
 
             {result ? (

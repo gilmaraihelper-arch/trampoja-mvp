@@ -149,7 +149,7 @@ export function FavoriteInviteActions({
 
         {invStatus === 'alreadyInvited' && expiresAt ? (
           <div className="text-muted-foreground text-[11px]">
-            Expira em {minutesToExpire(expiresAt)} min
+            Já convidado • expira em {minutesToExpire(expiresAt)} min
           </div>
         ) : null}
       </div>

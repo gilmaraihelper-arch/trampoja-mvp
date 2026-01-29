@@ -36,19 +36,23 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
 
   return (
     <RestaurantShell>
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold tracking-tight">{shift.title}</h1>
-        <Button asChild variant="ghost">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            {shift.title}
+          </h1>
+          <p className="text-muted-foreground mt-1 text-sm sm:mt-2 sm:text-base">
+            {shift.neighborhood ?? 'Curitiba'} • {formatDateTime(shift.startsAt)} →{' '}
+            {formatDateTime(shift.endsAt)}
+          </p>
+        </div>
+
+        <Button asChild variant="ghost" className="self-start sm:self-auto">
           <Link href="/restaurant/shifts">← Voltar</Link>
         </Button>
       </div>
 
-      <p className="text-muted-foreground mt-2">
-        {shift.neighborhood ?? 'Curitiba'} • {formatDateTime(shift.startsAt)} →{' '}
-        {formatDateTime(shift.endsAt)}
-      </p>
-
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_360px]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_360px]">
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Candidatos</CardTitle>
@@ -59,9 +63,9 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
               applicants.map((a) => (
                 <div
                   key={a.id}
-                  className="flex items-start justify-between gap-4 rounded-lg border p-4"
+                  className="flex flex-col gap-4 rounded-lg border p-4 sm:flex-row sm:items-start sm:justify-between"
                 >
-                  <div>
+                  <div className="min-w-0">
                     <div className="font-medium">{a.name}</div>
                     <div className="text-muted-foreground text-sm">
                       ⭐ {a.rating} • Confiabilidade {a.reliability}%
@@ -83,19 +87,30 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
                       </div>
                     ) : null}
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <Badge variant="outline">{a.status}</Badge>
-                    <FavoriteInviteActions
-                      restaurantId="rest_1001"
-                      shiftId={id}
-                      freelancerId={a.id}
-                    />
-                    <Button size="sm" disabled>
-                      Aprovar
-                    </Button>
-                    <Button size="sm" variant="outline" disabled>
-                      Rejeitar
-                    </Button>
+
+                  <div className="flex flex-col gap-2 sm:min-w-[180px]">
+                    <div className="flex items-center justify-between sm:justify-end">
+                      <Badge variant="outline">{a.status}</Badge>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <div className="flex-1">
+                        <FavoriteInviteActions
+                          restaurantId="rest_1001"
+                          shiftId={id}
+                          freelancerId={a.id}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button size="sm" disabled>
+                        Aprovar
+                      </Button>
+                      <Button size="sm" variant="outline" disabled>
+                        Rejeitar
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))
@@ -107,7 +122,7 @@ export default async function RestaurantShiftDetailPage({ params }: PageProps) {
           </CardContent>
         </Card>
 
-        <div className="space-y-6">
+        <div className="order-first space-y-6 lg:order-none">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Resumo</CardTitle>
