@@ -87,12 +87,18 @@ export function InviteFavoritesPanel({
     const onFav = () => {
       refreshFavorites().catch(() => null)
     }
+    const onInv = () => {
+      refreshInvites().catch(() => null)
+    }
+
     window.addEventListener('trampoja:favorites-updated', onFav)
+    window.addEventListener('trampoja:invites-updated', onInv)
 
     return () => {
       cancelled = true
       clearInterval(t)
       window.removeEventListener('trampoja:favorites-updated', onFav)
+      window.removeEventListener('trampoja:invites-updated', onInv)
     }
   }, [refreshFavorites, refreshInvites])
 
@@ -152,6 +158,7 @@ export function InviteFavoritesPanel({
       }
 
       await refreshInvites()
+      window.dispatchEvent(new Event('trampoja:invites-updated'))
       setSelected({})
 
       setResult(

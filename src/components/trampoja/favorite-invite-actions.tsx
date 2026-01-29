@@ -118,10 +118,12 @@ export function FavoriteInviteActions({
         // If the API returns expiresAt, it is an active invite → show the same UI as "already invited"
         setExpiresAt(data.expiresAt)
         setInvStatus('alreadyInvited')
+        window.dispatchEvent(new Event('trampoja:invites-updated'))
         return
       }
 
       setInvStatus(data.alreadyInvited ? 'alreadyInvited' : 'sent')
+      window.dispatchEvent(new Event('trampoja:invites-updated'))
     })
   }
 
